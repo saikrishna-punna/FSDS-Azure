@@ -1,0 +1,40 @@
+[project]
+name = "python-project-uv"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "matplotlib>=3.10.1",
+    # Common dependencies for all environments
+    "numpy==1.26.4",
+    "pandas>=2.2.3",
+    "scikit-learn>=1.6.1",
+]
+
+[project.optional-dependencies]
+formatter = [
+    # optional development dependencies
+    "black",
+    "isort",
+    "flake8",
+]
+plot = [
+    # optional visualization related dependencies
+    "matplotlib",
+    "seaborn",
+]
+test = [
+    # optional testing dependencies
+    "pytest"
+]
+
+
+
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
