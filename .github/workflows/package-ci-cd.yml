@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ main ]
   push:
-    branches: [ enh/* ]  # For testing purposes and main branch
+    branches: [ enh/*, main ]  # For testing purposes and main branch
 
 jobs:
   style-test:
@@ -29,15 +29,9 @@ jobs:
           uv venv .venv-dev
           source .venv-dev/bin/activate
           uv pip install -e ".[formatter]"
-
-      - name: Run isort
-        run: uv run isort --check --diff .
-
-      - name: Run black
-        run: uv run black --check --diff .
-
-      - name: Run flake8
-        run: uv run flake8 .
+          uv run isort --check --diff .
+          uv run black --check --diff .
+          uv run flake8 .
 
   test:
     name: Unit and Functional Tests
@@ -66,7 +60,10 @@ jobs:
           # uv pip install pytest
 
       - name: Run pytest
-        run: pytest tests/unit_tests/
+      
+        run: 
+          source .venv-dev/bin/activate        
+          pytest tests/unit_tests/
         # The workflow will fail automatically if pytest returns non-zero exit code
 
   build:
