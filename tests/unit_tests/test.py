@@ -28,4 +28,3 @@ class TestScorer(TestCase):
     def test_three(self):
         a = scorer()
         assert type(a) is np.float64, "num must be an floating integer"
-

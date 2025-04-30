@@ -1,5 +1,4 @@
-
-#!.venv-dev/bin/python
+# !.venv-dev/bin/python
 
 import argparse
 import json

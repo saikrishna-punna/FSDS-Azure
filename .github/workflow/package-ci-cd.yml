@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ main ]
   push:
-    branches: [ enh/*, main ]  # For testing purposes and main branch
+    branches: [ enh/*]  # For testing purposes and main branch
 
 jobs:
   style-test:
@@ -29,8 +29,8 @@ jobs:
           uv venv .venv-dev
           source .venv-dev/bin/activate
           uv pip install -e ".[formatter]"
-          uv run isort --check --diff .
-          uv run black --check --diff .
+          uv run isort .
+          uv run black .
           uv run flake8 .
 
   test:

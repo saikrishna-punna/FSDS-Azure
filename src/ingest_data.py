@@ -3,7 +3,7 @@ import os
 import tarfile
 import urllib.request
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.impute import SimpleImputer
@@ -42,7 +42,8 @@ def load_data(output_path, log_level, console_log, log_path):
         logger.addHandler(fh)
     handler = logging.StreamHandler()
     formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
@@ -117,7 +118,7 @@ def load_data(output_path, log_level, console_log, log_path):
     housing.plot(kind="scatter", x="longitude", y="latitude")
     housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.1)
 
-    numeric_housing = housing.select_dtypes(include=['number'])
+    numeric_housing = housing.select_dtypes(include=["number"])
     corr_matrix = numeric_housing.corr()
     # corr_matrix = housing.corr()
     corr_matrix["median_house_value"].sort_values(ascending=False)

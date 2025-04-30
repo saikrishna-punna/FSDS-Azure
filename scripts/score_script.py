@@ -1,4 +1,3 @@
-
 #!.venv-dev/bin/python
 
 import argparse

@@ -42,7 +42,8 @@ def scorer(output_path, output_path_model, log_level, console_log, log_path):
         logger.addHandler(fh)
     handler = logging.StreamHandler()
     formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
