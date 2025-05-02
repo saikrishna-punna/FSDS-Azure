@@ -61,7 +61,7 @@ jobs:
 
       - name: Run pytest
       
-        run: 
+        run: |
           source .venv-dev/bin/activate        
           pytest tests/unit_tests/
         # The workflow will fail automatically if pytest returns non-zero exit code
@@ -72,12 +72,12 @@ jobs:
     needs: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install uv
         run: |
@@ -103,7 +103,7 @@ jobs:
         run: tree -a -I '.git'
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: package-build
           path: |
@@ -117,7 +117,7 @@ jobs:
     needs: build
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: package-build
           path: artifacts
@@ -153,4 +153,3 @@ jobs:
           
           echo "Running scorer at $(date '+%Y-%m-%d %H:%M:%S')"
           uv run scripts/score_script.py
-          
