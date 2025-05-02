@@ -79,33 +79,21 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install uv
+      - name: Setup env
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-
-      - name: Setup environment with uv
-        run: |
           uv pip install .
           uv pip install build
+          sudo apt-get install -y tree
+          tree -a -I '.git'
+          uv build
+          tree -a -I '.git'
 
-      - name: Install tree CLI tool
-        run: sudo apt-get install -y tree
-
-      - name: Display directory tree before build
-        run: tree -a -I '.git'
-
-      - name: Build package
-        run: |
-          python -m build
-
-      - name: Display directory tree after build
-        run: tree -a -I '.git'
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
         with:
-          name: package-build
+          name: build-artifacts
           path: |
             dist/
             pyproject.toml
