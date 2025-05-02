@@ -1,11 +1,11 @@
 import os
 import shutil
+from unittest.mock import MagicMock, patch
+
 import numpy as np
 import pandas as pd
 import pytest
-from unittest.mock import MagicMock, mock_open, patch
 from sklearn.ensemble import RandomForestRegressor
-
 
 from ingest_data import load_data
 from score import scorer
