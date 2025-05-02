@@ -90,14 +90,13 @@ jobs:
           uv build
           tree -a -I '.git'
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: |
             dist/
             pyproject.toml
-          retention-days: 7
 
   install:
     name: Install and Test Package
