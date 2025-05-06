@@ -8,9 +8,9 @@ import pandas as pd
 import pytest
 from sklearn.ensemble import RandomForestRegressor
 
-from ingest_data import load_data
-from score import scorer
-from train import training
+from housing.ingest_data import load_data
+from housing.score import scorer
+from housing.train import training
 
 
 @pytest.fixture

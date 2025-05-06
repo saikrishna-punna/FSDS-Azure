@@ -3,7 +3,7 @@
 import argparse
 import json
 
-from ingest_data import load_data
+from housing.ingest_data import load_data
 
 
 def parse_bool(s: str) -> bool:

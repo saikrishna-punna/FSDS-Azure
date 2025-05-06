@@ -3,7 +3,7 @@
 import argparse
 import json
 
-from score import scorer
+from housing.score import scorer
 
 
 def parse_bool(s: str) -> bool:

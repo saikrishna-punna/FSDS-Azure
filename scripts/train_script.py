@@ -3,7 +3,7 @@
 import argparse
 import json
 
-from train import training
+from housing.train import training
 
 
 def parse_bool(s: str) -> bool:
