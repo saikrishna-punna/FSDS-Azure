@@ -61,7 +61,7 @@ jobs:
           uv pip install pytest
           source .venv-test/bin/activate
           uv build
-          uv run pytest tests/unit_tests/
+          uv run pytest tests
         # The workflow will fail automatically if pytest returns non-zero exit code
 
   build:
