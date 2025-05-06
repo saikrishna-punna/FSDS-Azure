@@ -43,7 +43,6 @@ def mock_housing_data():
             "households": [126.0, 1138.0, 177.0, 219.0],
             "median_income": [8.3252, 8.3014, 7.2574, 5.6431],
             "median_house_value": [452600.0, 358500.0, 352100.0, 341300.0],
-            "ocean_proximity": ["NEAR BAY", "NEAR BAY", "<1H OCEAN", "<1H OCEAN"],
         }
     )
     return housing_data

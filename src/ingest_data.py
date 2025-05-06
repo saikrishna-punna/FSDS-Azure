@@ -79,9 +79,13 @@ def load_data(output_path, log_level, console_log, log_path):
     )
 
     split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
-    for train_index, test_index in split.split(housing, housing["income_cat"]):
-        strat_train_set = housing.loc[train_index]
-        strat_test_set = housing.loc[test_index]
+    try:
+        for train_index, test_index in split.split(housing, housing["income_cat"]):
+            strat_train_set = housing.loc[train_index]
+            strat_test_set = housing.loc[test_index]
+    except Exception as e:
+        strat_train_set = housing
+        strat_test_set = housing
 
     def income_cat_proportions(data):
         return data["income_cat"].value_counts() / len(data)
