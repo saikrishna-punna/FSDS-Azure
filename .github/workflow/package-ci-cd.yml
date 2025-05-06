@@ -118,22 +118,15 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install uv
+      - name: Install uv and test
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-      - name: Create and activate venv
-        run: |
           uv venv .venv-dev
           source .venv-dev/bin/activate
-
-      - name: Install built wheel
-        run: |
           uv pip install artifacts/dist/*.whl
 
-      - name: Run workflow scripts
-        run: |
           echo "Running ingest_data at $(date '+%Y-%m-%d %H:%M:%S')"
           uv run scripts/ingest_data_script.py
 
