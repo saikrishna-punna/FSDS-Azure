@@ -129,6 +129,7 @@ jobs:
           uv pip install -e artifacts
           ls -la artifacts/dist/
           uv pip install artifacts/dist/*.whl  # Install wheel package
+          uv pip install -e .
 
       - name: Run workflow scripts
         run: |
