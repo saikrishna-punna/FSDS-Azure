@@ -68,7 +68,7 @@ jobs:
     name: Build Package
     runs-on: ubuntu-latest
     needs: 
-      tests
+      test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
