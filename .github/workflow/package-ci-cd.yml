@@ -127,11 +127,11 @@ jobs:
           source .venv-dev/bin/activate
           uv pip install artifacts/dist/*.whl
 
-          echo "Running ingest_data at $(date '+%Y-%m-%d %H:%M:%S')"
-          uv run scripts/ingest_data_script.py
+          # echo "Running ingest_data at $(date '+%Y-%m-%d %H:%M:%S')"
+          # uv run scripts/ingest_data_script.py
 
-          echo "Running training at $(date '+%Y-%m-%d %H:%M:%S')"
-          uv run scripts/train_script.py
+          # echo "Running training at $(date '+%Y-%m-%d %H:%M:%S')"
+          # uv run scripts/train_script.py
 
-          echo "Running scorer at $(date '+%Y-%m-%d %H:%M:%S')"
-          uv run scripts/score_script.py
+          # echo "Running scorer at $(date '+%Y-%m-%d %H:%M:%S')"
+          # uv run scripts/score_script.py
