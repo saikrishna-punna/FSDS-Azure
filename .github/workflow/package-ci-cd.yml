@@ -128,6 +128,8 @@ install:
         uv venv .venv-dev
         source .venv-dev/bin/activate
 
+    - name: Install built wheel
+      run: |
         uv pip install artifacts/dist/*.whl
 
     - name: Run workflow scripts
