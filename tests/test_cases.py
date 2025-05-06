@@ -89,6 +89,7 @@ def mock_housing_data():
                 341300.0,
             ],
             "income_cat": [1, 2, 3, 4, 5, 6, 7, 8],
+            "ocean_proximity": [1, 2, 3, 4, 5, 6, 7, 8],
         }
     )
     return housing_data
