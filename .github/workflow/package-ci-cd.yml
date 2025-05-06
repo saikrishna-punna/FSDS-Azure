@@ -56,13 +56,13 @@ jobs:
           uv venv .venv-test
           source .venv-test/bin/activate        
           uv pip install -r pyproject.toml
-          # uv pip install -e .
-          uv pip install -e ".[test]"
+          uv pip install -e .
+          uv pip install pytest
 
       - name: Run pytest
       
         run: |
-          source .venv-test/bin/activate        
+          source .venv-dev/bin/activate        
           pytest tests/unit_tests/
         # The workflow will fail automatically if pytest returns non-zero exit code
 
