@@ -124,10 +124,9 @@ jobs:
         run: |
           # If needed for dependencies, but might not be necessary
           # as the wheel should include dependencies
+          uv venv .venv-dev
+          source .venv-dev/bin/activate
           uv pip install -e artifacts
-
-      - name: Install package
-        run: |
           ls -la artifacts/dist/
           uv pip install artifacts/dist/*.whl  # Install wheel package
 
