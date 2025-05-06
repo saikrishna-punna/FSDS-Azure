@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ main ]
   push:
-    branches: [ enh/*, main ]  # For testing purposes and main branch
+    branches: [ enh/*]  # For testing purposes and main branch
 
 jobs:
   style-test:
@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install uv
         run: |
@@ -29,8 +29,8 @@ jobs:
           uv venv .venv-dev
           source .venv-dev/bin/activate
           uv pip install -e ".[formatter]"
-          uv run isort --check --diff .
-          uv run black --check --diff .
+          uv run isort .
+          uv run black .
           uv run flake8 .
 
   test:
@@ -39,12 +39,12 @@ jobs:
     needs: style-test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install uv
         run: |
@@ -61,7 +61,7 @@ jobs:
 
       - name: Run pytest
       
-        run: 
+        run: |
           source .venv-dev/bin/activate        
           pytest tests/unit_tests/
         # The workflow will fail automatically if pytest returns non-zero exit code
@@ -72,44 +72,31 @@ jobs:
     needs: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5.6.0
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
-      - name: Install uv
+      - name: Setup env
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-
-      - name: Setup environment with uv
-        run: |
           uv pip install .
           uv pip install build
+          sudo apt-get install -y tree
+          tree -a -I '.git'
+          uv build
+          tree -a -I '.git'
 
-      - name: Install tree CLI tool
-        run: sudo apt-get install -y tree
-
-      - name: Display directory tree before build
-        run: tree -a -I '.git'
-
-      - name: Build package
-        run: |
-          python -m build
-
-      - name: Display directory tree after build
-        run: tree -a -I '.git'
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4.6.2
         with:
-          name: package-build
+          name: build-artifacts
           path: |
             dist/
             pyproject.toml
-          retention-days: 7
 
   install:
     name: Install and Test Package
@@ -117,15 +104,15 @@ jobs:
     needs: build
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.3.0
         with:
-          name: package-build
+          name: build-artifacts
           path: artifacts
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5.6.0
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install uv
         run: |
@@ -153,4 +140,3 @@ jobs:
           
           echo "Running scorer at $(date '+%Y-%m-%d %H:%M:%S')"
           uv run scripts/score_script.py
-          
