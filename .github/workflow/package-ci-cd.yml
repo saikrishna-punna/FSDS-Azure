@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ main ]
   push:
-    branches: [ enh/*]  # For testing purposes and main branch
+    branches: [ enh/*]
 
 jobs:
   style-test:
@@ -36,7 +36,9 @@ jobs:
   test:
     name: Unit and Functional Tests
     runs-on: ubuntu-latest
-    needs: style-test
+    needs: 
+      style-test
+      build
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -60,16 +62,14 @@ jobs:
           uv pip install pytest
 
       - name: Run pytest
-      
         run: |
-          source .venv-dev/bin/activate        
+          source .venv-test/bin/activate
           pytest tests/unit_tests/
         # The workflow will fail automatically if pytest returns non-zero exit code
 
   build:
     name: Build Package
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
