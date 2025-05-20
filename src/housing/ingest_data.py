@@ -3,6 +3,8 @@ import os
 import tarfile
 import urllib.request
 
+import mlflow
+
 # import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -51,9 +53,9 @@ def load_data(output_path, log_level, console_log, log_path):
     if console_log is False:
         logger.disable(logging.CRITICAL)
 
-    DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
+    # DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
     housing_path = os.path.join("data", "housing")
-    housing_url = DOWNLOAD_ROOT + "data/housing/housing.tgz"
+    housing_url = "https://raw.githubusercontent.com/ageron/handson-ml2/master/datasets/housing/housing.tgz"
 
     os.makedirs(housing_path, exist_ok=True)
     tgz_path = os.path.join(housing_path, "housing.tgz")
@@ -65,6 +67,7 @@ def load_data(output_path, log_level, console_log, log_path):
     csv_path = os.path.join(housing_path, "housing.csv")
     logger.info("Reading the housing.csv File")
     housing = pd.read_csv(csv_path)
+    mlflow.log_artifact(csv_path)
     if housing.empty:
         logger.error("Unable to read housing.csv")
     else:

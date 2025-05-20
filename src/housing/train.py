@@ -2,6 +2,8 @@ import logging
 import os
 import pickle
 
+import mlflow
+import mlflow.sklearn
 import numpy as np
 import pandas as pd
 from scipy.stats import randint
@@ -40,7 +42,7 @@ def training(output_path, output_path_model, log_level, console_log, log_path):
         final_model pickle file is generated and stored at output_path_model
 
     """
-
+    mlflow.sklearn.autolog()
     logger = logging.getLogger()
     if log_path:
         fh = logging.FileHandler(log_path)
