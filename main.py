@@ -3,8 +3,6 @@ import json
 from datetime import datetime
 
 import mlflow
-from azure.ai.ml import MLClient
-from azure.identity import DefaultAzureCredential
 
 from housing.ingest_data import load_data
 from housing.score import scorer
@@ -88,7 +86,13 @@ def main():
             nested=True,
         ):
             mlflow.log_param("Model_Training", "yes")
-            training(output_path, output_path_model, log_level, console_log, log_path)
+            training(
+                output_path,
+                output_path_model,
+                log_level,
+                console_log,
+                log_path,
+            )
 
         with mlflow.start_run(
             run_name="Scoring",
@@ -97,7 +101,13 @@ def main():
             nested=True,
         ):
             mlflow.log_param("Scoring", "yes")
-            scorer(output_path, output_path_model, log_level, console_log, log_path)
+            scorer(
+                output_path,
+                output_path_model,
+                log_level,
+                console_log,
+                log_path,
+            )
 
 
 if __name__ == "__main__":
