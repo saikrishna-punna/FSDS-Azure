@@ -67,7 +67,10 @@ def load_data(output_path, log_level, console_log, log_path):
     csv_path = os.path.join(housing_path, "housing.csv")
     logger.info("Reading the housing.csv File")
     housing = pd.read_csv(csv_path)
-    mlflow.log_artifact(csv_path)
+    try:
+        mlflow.log_artifact(csv_path)
+    except Exception as e:
+        logger.info("ignoring mlflow in githug workflow testing")
     if housing.empty:
         logger.error("Unable to read housing.csv")
     else:

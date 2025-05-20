@@ -60,8 +60,10 @@ def scorer(output_path, output_path_model, log_level, console_log, log_path):
         logger.info("Unplickling Completed")
     else:
         logger.error("Unpickling Failed")
-
-    mlflow.sklearn.autolog()
+    try:
+        mlflow.sklearn.autolog()
+    except Exception as e:
+        logger.info("ignoring mlflow in githug workflow testing")
 
     logger.info("Reading the Test Files")
     X_test_prepared = pd.read_csv(os.path.join(output_path, "X_test_prepared.csv"))

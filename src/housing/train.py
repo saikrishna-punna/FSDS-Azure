@@ -42,8 +42,8 @@ def training(output_path, output_path_model, log_level, console_log, log_path):
         final_model pickle file is generated and stored at output_path_model
 
     """
-    mlflow.sklearn.autolog()
     logger = logging.getLogger()
+
     if log_path:
         fh = logging.FileHandler(log_path)
         logger.addHandler(fh)
@@ -59,6 +59,12 @@ def training(output_path, output_path_model, log_level, console_log, log_path):
         logger.disable(logging.CRITICAL)
 
     logger.info("Reading the Training Files")
+
+    try:
+        mlflow.sklearn.autolog()
+    except Exception as e:
+        logger.info("ignoring mlflow in githug workflow testing")
+
     housing_prepared = pd.read_csv(os.path.join(output_path, "housing_prepared.csv"))
     if housing_prepared.empty:
         logger.error("Unable to read Xtrain")
