@@ -136,27 +136,19 @@ jobs:
           # echo "Running scorer at $(date '+%Y-%m-%d %H:%M:%S')"
           # uv run scripts/score_script.py
 
-  build-and-push:
+  deplot-to-acr:
     runs-on: ubuntu-latest
     needs: install
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Download Model Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: model-artifacts
-
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4.3.0
         with:
           name: build-artifacts
+          path: artifacts
 
-      - name: Show directory tree before building docker.
-        shell: bash -l {0}
-        run: tree -a -L 3
-        
       - name: Login to Azure Container Registry (ACR)
         run: docker login -u "${{ secrets.FSDS_USERNAME }}" -p "${{ secrets.FSDS_ACR_TOKEN }}" saipunnafsds.azurecr.io
 
