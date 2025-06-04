@@ -3,8 +3,8 @@ name: Package CI/CD
 on:
   pull_request:
     branches: [ main ]
-  # push:
-  #   branches: [ enh/*]
+  push:
+    branches: [ enh/*]
 
 jobs:
   style-test:
