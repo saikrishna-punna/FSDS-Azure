@@ -154,7 +154,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build --no-cache -t saipunnafsds.azurecr.io/housing-prediction:latest -f docker/Dockerfile .
+          docker build --no-cache -t saipunnafsds.azurecr.io/housing-prediction:latest -f Dockerfile .
 
       - name: Push Docker image to ACR
         run: |
