@@ -15,6 +15,6 @@ COPY --chown=appuser:appuser ./main.py /home/appuser/app/
 
 WORKDIR /home/appuser/app/
 
-RUN pip install python_project_uv-0.1.0-py3-none-any.whl
+RUN pip install dist/*.whl
 
 ENTRYPOINT [ "python", "/home/appuser/app/main.py"]
