@@ -2,6 +2,8 @@ import logging
 import os
 import pickle
 
+import mlflow
+import mlflow.sklearn
 import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_squared_error
@@ -58,6 +60,10 @@ def scorer(output_path, output_path_model, log_level, console_log, log_path):
         logger.info("Unplickling Completed")
     else:
         logger.error("Unpickling Failed")
+    try:
+        mlflow.sklearn.autolog()
+    except Exception as e:
+        logger.info("ignoring mlflow in githug workflow testing")
 
     logger.info("Reading the Test Files")
     X_test_prepared = pd.read_csv(os.path.join(output_path, "X_test_prepared.csv"))
