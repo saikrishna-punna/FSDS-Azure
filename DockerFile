@@ -13,8 +13,9 @@ RUN mkdir -p /home/appuser/app
 
 WORKDIR /home/appuser/app/
 
-# Install uv and add to PATH
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+# Install uv and add to PATH in the same layer
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
 ENV PATH="/home/appuser/.cargo/bin:$PATH"
 
 # Copy source files for building
@@ -22,5 +23,7 @@ COPY --chown=appuser:appuser . /home/appuser/app/
 
 # Install dependencies and build the package
 RUN uv pip install .
+
+# The main.py should already be copied with the source code above
 
 ENTRYPOINT ["python", "/home/appuser/app/main.py"]
