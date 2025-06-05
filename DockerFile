@@ -1,0 +1,27 @@
+FROM python:3.12-slim
+
+RUN apt-get update -y && \
+    apt-get install -y curl git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install uv as root
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:$PATH"
+
+# Copy source files and install dependencies as root
+COPY . /tmp/app/
+WORKDIR /tmp/app/
+RUN uv pip install --system .
+
+# Now create user and set up app directory
+RUN useradd --create-home appuser
+RUN mkdir -p /home/appuser/app
+WORKDIR /home/appuser/app/
+
+# Copy the application files
+COPY --chown=appuser:appuser ./main.py /home/appuser/app/
+
+USER appuser
+
+ENTRYPOINT ["python", "/home/appuser/app/main.py"]
