@@ -98,7 +98,7 @@ jobs:
       - name: Raise and issue in Github
         if: ${{ env.DATA_DRIFT_DETECTED }} == "Y"
         run: |
-          gh git issue create --title "Data Drift Detected" --body ${{ env.DRIFT_MESSAGE }}
+          gh issue create --title "Data Drift Detected" --body ${{ env.DRIFT_MESSAGE }}
 
 
       - name: Upload Build Artifacts
