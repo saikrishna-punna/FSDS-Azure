@@ -5,22 +5,23 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install uv as root
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:$PATH"
+
+# Copy source files and install dependencies as root
+COPY . /tmp/app/
+WORKDIR /tmp/app/
+RUN uv pip install --system .
+
+# Now create user and set up app directory
 RUN useradd --create-home appuser
-USER appuser
-
 RUN mkdir -p /home/appuser/app
-
-
 WORKDIR /home/appuser/app/
 
-# Install uv and ensure it's in PATH for subsequent RUN commands
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/home/appuser/.local/bin:$PATH"
+# Copy the application files
+COPY --chown=appuser:appuser ./main.py /home/appuser/app/
 
-# Copy source files for building
-COPY --chown=appuser:appuser . /home/appuser/app/
-
-# Install dependencies - use shell to ensure PATH is loaded
-RUN bash -c "source ~/.bashrc && uv pip install --system ."
+USER appuser
 
 ENTRYPOINT ["python", "/home/appuser/app/main.py"]
