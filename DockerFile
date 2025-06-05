@@ -10,13 +10,15 @@ USER appuser
 
 RUN mkdir -p /home/appuser/app
 
-COPY --chown=appuser:appuser ./dist/python_project_uv-0.1.0-py3-none-any.whl /home/appuser/app/
-COPY --chown=appuser:appuser ./main.py /home/appuser/app/
 
 WORKDIR /home/appuser/app/
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 RUN uv pip install .
 RUN uv build
+
+COPY --chown=appuser:appuser ./dist/python_project_uv-0.1.0-py3-none-any.whl /home/appuser/app/
+COPY --chown=appuser:appuser ./main.py /home/appuser/app/
+
 
 ENTRYPOINT [ "python", "/home/appuser/app/main.py"]
