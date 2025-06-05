@@ -150,7 +150,7 @@ jobs:
           path: ./
 
       - name: Login to Azure Container Registry (ACR)
-        run: docker login -u GithubAction -p "${{ secrets.FSDS_ACR_TOKEN }}" saipunnafsds.azurecr.io
+        run: docker login -u saipunna -p ${{secrets.FSDS_ACR_TOKEN}} saipunnafsds.azurecr.io
 
       - name: Build the Docker image
         run: |
