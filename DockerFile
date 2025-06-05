@@ -21,6 +21,6 @@ ENV PATH="/home/appuser/.local/bin:$PATH"
 COPY --chown=appuser:appuser . /home/appuser/app/
 
 # Install dependencies - use shell to ensure PATH is loaded
-RUN bash -c "source ~/.bashrc && uv pip install ."
+RUN bash -c "source ~/.bashrc && uv pip install --system ."
 
 ENTRYPOINT ["python", "/home/appuser/app/main.py"]
