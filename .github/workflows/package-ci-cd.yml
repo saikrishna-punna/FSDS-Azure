@@ -91,6 +91,16 @@ jobs:
           uv build
           tree -a -I '.git'
 
+      - name: Check data drift
+        run: |
+          echo "Data drift detected: ${{ env.DATA_DRIFT_DETECTED }}"
+      
+      - name: Raise and issue in Github
+        if: ${{ env.DATA_DRIFT_DETECTED }} == "Y"
+        run: |
+          gh git issue create --title "Data Drift Detected" --body ${{ env.DRIFT_MESSAGE }}
+
+
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4.6.2
         with:
@@ -164,3 +174,4 @@ jobs:
       - name: Push Docker image to ACR
         run: |
           docker push saipunnafsds.azurecr.io/housing-prediction:latest
+    
