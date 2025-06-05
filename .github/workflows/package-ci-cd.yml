@@ -96,10 +96,12 @@ jobs:
           echo "Data drift detected: ${{ env.DATA_DRIFT_DETECTED }}"
       
       - name: Raise and issue in Github
-        if: ${{ env.DATA_DRIFT_DETECTED }} == "Y"
+        if: ${{ env.DATA_DRIFT_DETECTED == 'Y' }}
         run: |
-          gh issue create --title "Data Drift Detected" --body ${{ env.DRIFT_MESSAGE }}
-
+          gh issue create --title "Data Drift Detected" --body "${DRIFT_MESSAGE:- Data drift has been detected in the system. Please investigate.}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRIFT_MESSAGE: ${{ env.DRIFT_MESSAGE }}
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4.6.2
