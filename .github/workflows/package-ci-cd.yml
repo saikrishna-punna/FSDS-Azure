@@ -135,3 +135,32 @@ jobs:
 
           # echo "Running scorer at $(date '+%Y-%m-%d %H:%M:%S')"
           # uv run scripts/score_script.py
+
+  deploy-to-acr:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4.3.0
+        with:
+          name: build-artifacts
+          path: ./
+
+      # - name: Login to Azure Container Registry (ACR)
+      #   run: docker login -u saipunna -p ${{secrets.FSDS_ACR_TOKEN}} saipunnafsds.azurecr.io
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: saipunnafsds.azurecr.io
+          username: SaiPunnaFSDS
+          password: ${{secrets.FSDS_ACCESS_KEY}}
+      - name: Build the Docker image
+        run: |
+          docker build --no-cache -t saipunnafsds.azurecr.io/housing-prediction:latest -f ./DockerFile .
+
+      - name: Push Docker image to ACR
+        run: |
+          docker push saipunnafsds.azurecr.io/housing-prediction:latest
