@@ -1,0 +1,9 @@
+{
+	"name": "SaiPunna-ADF-FSDS",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "09104dc0-6c42-44e6-bb80-5d4ef37deb86",
+		"tenantId": "e714ef31-faab-41d2-9f1e-e6df4af16ab8"
+	}
+}
