@@ -4,10 +4,10 @@ import tarfile
 import urllib.request
 
 import mlflow
-
-# import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from evidently import Report
+from evidently.presets import DataDriftPreset
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import StratifiedShuffleSplit, train_test_split
 
@@ -106,6 +106,15 @@ def load_data(output_path, log_level, console_log, log_path):
         logger.error("Unable to create test")
     else:
         logger.info("created test")
+
+    report = Report([DataDriftPreset(method="psi")], include_tests="True")
+    report_dict = report.run(train_set, test_set).dict()
+    drift_values = [val["value"] for val in report_dict["metrics"][1:]]
+    os.environ["DATA_DRIFT_DETECTED"] = "N"
+    os.environ["DRIFT_MESSAGE"] = "NA"
+    if max(drift_values) > 0.1:
+        os.environ["DATA_DRIFT_DETECTED"] = "Y"
+        os.environ["DRIFT_MESSAGE"] = f"{report_dict}"
 
     compare_props = pd.DataFrame(
         {

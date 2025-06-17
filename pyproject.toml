@@ -13,6 +13,7 @@ dependencies = [
     "scikit-learn>=1.6.1",
     "mlflow",
     "azure-ai-ml",
+    "evidently",
 ]
 
 [project.optional-dependencies]
