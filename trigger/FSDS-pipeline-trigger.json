@@ -1,0 +1,25 @@
+{
+	"name": "FSDS-pipeline-trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline1",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/azureml/blobs/data/",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/29885dc5-e498-4fda-8cd8-1836dfde694f/resourceGroups/FSDS-Apr-batch-01/providers/Microsoft.Storage/storageAccounts/myworspace2286403020",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
